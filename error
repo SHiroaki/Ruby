@@ -1,0 +1,115 @@
+─Hiroaki@Hiroaki-no-MacBook-Pro.local ~/ruby/book_admin ‹2.2.0› ‹master*›
+╰─➤  ./bin/rails g Book name:string published_on:date price:integer number_of_page:integer
+/usr/local/var/rbenv/versions/2.2.0/lib/ruby/gems/2.2.0/gems/activesupport-4.1.1/lib/active_support/values/time_zone.rb:285: warning: circular argument reference - now
+Could not find generator Book.
+╭─Hiroaki@Hiroaki-no-MacBook-Pro.local ~/ruby/book_admin ‹2.2.0› ‹master*›
+╰─➤  ./bin/rails g model Book name:string published_on:date price:integer number_of_page:integer
+      invoke  active_record
+      create    db/migrate/20150224111334_create_books.rb
+      create    app/models/book.rb
+      invoke    test_unit
+      create      test/models/book_test.rb
+      create      test/fixtures/books.yml
+╭─Hiroaki@Hiroaki-no-MacBook-Pro.local ~/ruby/book_admin ‹2.2.0› ‹master*›
+╰─➤  ./bin/rake db:create
+╭─Hiroaki@Hiroaki-no-MacBook-Pro.local ~/ruby/book_admin ‹2.2.0› ‹master*›
+╰─➤  ./bin/rake migrate
+rake aborted!
+Don't know how to build task 'migrate'
+-e:1:in `<main>'
+(See full trace by running task with --trace)
+╭─Hiroaki@Hiroaki-no-MacBook-Pro.local ~/ruby/book_admin ‹2.2.0› ‹master*›
+╰─➤  ./bin/rake db:migrate                                                                                                     1 ↵
+== 20150224111334 CreateBooks: migrating ======================================
+-- create_table(:books)
+   -> 0.0016s
+== 20150224111334 CreateBooks: migrated (0.0017s) =============================
+
+╭─Hiroaki@Hiroaki-no-MacBook-Pro.local ~/ruby/book_admin ‹2.2.0› ‹master*›
+╰─➤  ./bin/rails c
+Loading development environment (Rails 4.1.1)
+irb(main):001:0> Book.new
+=> #<Book id: nil, name: nil, published_on: nil, price: nil, number_of_page: nil, created_at: nil, updated_at: nil>
+irb(main):002:0> Book
+=> Book(id: integer, name: string, published_on: date, price: integer, number_of_page: integer, created_at: datetime, updated_at: datetime)
+irb(main):003:0>
+╭─Hiroaki@Hiroaki-no-MacBook-Pro.local ~/ruby/book_admin ‹2.2.0› ‹master*›
+╰─➤  rails c
+Loading development environment (Rails 4.1.1)
+irb(main):001:0> Book
+=> Book (call 'Book.connection' to establish a connection)
+irb(main):002:0> Book.new
+=> #<Book id: nil, name: nil, published_on: nil, price: nil, number_of_page: nil, created_at: nil, updated_at: nil>
+irb(main):003:0> Book
+=> Book(id: integer, name: string, published_on: date, price: integer, number_of_page: integer, created_at: datetime, updated_at: datetime)
+irb(main):004:0>
+╭─Hiroaki@Hiroaki-no-MacBook-Pro.local ~/ruby/book_admin ‹2.2.0› ‹master*›
+╰─➤  rails c
+Loading development environment (Rails 4.1.1)
+irb(main):001:0> (1..5).each do |i|
+irb(main):002:1*   Book.create(name: "Book #{i}", published_on: i.months.ago, price: (i * 1000))
+irb(main):003:1> end
+   (0.1ms)  begin transaction
+  SQL (0.7ms)  INSERT INTO "books" ("created_at", "name", "price", "published_on", "updated_at") VALUES (?, ?, ?, ?, ?)  [["created_at", "2015-02-24 11:22:43.945861"], ["name", "Book 1"], ["price", 1000], ["published_on", "2015-01-24"], ["updated_at", "2015-02-24 11:22:43.945861"]]
+   (1.5ms)  commit transaction
+   (0.1ms)  begin transaction
+  SQL (0.3ms)  INSERT INTO "books" ("created_at", "name", "price", "published_on", "updated_at") VALUES (?, ?, ?, ?, ?)  [["created_at", "2015-02-24 11:22:43.967790"], ["name", "Book 2"], ["price", 2000], ["published_on", "2014-12-24"], ["updated_at", "2015-02-24 11:22:43.967790"]]
+   (1.4ms)  commit transaction
+   (0.1ms)  begin transaction
+  SQL (0.3ms)  INSERT INTO "books" ("created_at", "name", "price", "published_on", "updated_at") VALUES (?, ?, ?, ?, ?)  [["created_at", "2015-02-24 11:22:43.972043"], ["name", "Book 3"], ["price", 3000], ["published_on", "2014-11-24"], ["updated_at", "2015-02-24 11:22:43.972043"]]
+   (1.1ms)  commit transaction
+   (0.1ms)  begin transaction
+  SQL (0.2ms)  INSERT INTO "books" ("created_at", "name", "price", "published_on", "updated_at") VALUES (?, ?, ?, ?, ?)  [["created_at", "2015-02-24 11:22:43.975852"], ["name", "Book 4"], ["price", 4000], ["published_on", "2014-10-24"], ["updated_at", "2015-02-24 11:22:43.975852"]]
+   (1.0ms)  commit transaction
+   (0.1ms)  begin transaction
+  SQL (0.3ms)  INSERT INTO "books" ("created_at", "name", "price", "published_on", "updated_at") VALUES (?, ?, ?, ?, ?)  [["created_at", "2015-02-24 11:22:43.978973"], ["name", "Book 5"], ["price", 5000], ["published_on", "2014-09-24"], ["updated_at", "2015-02-24 11:22:43.978973"]]
+   (1.1ms)  commit transaction
+=> 1..5
+irb(main):004:0> Book.find(2)
+  Book Load (0.4ms)  SELECT  "books".* FROM "books"  WHERE "books"."id" = ? LIMIT 1  [["id", 2]]
+=> #<Book id: 2, name: "Book 2", published_on: "2014-12-24", price: 2000, number_of_page: nil, created_at: "2015-02-24 11:22:43", updated_at: "2015-02-24 11:22:43">
+irb(main):005:0> Book.where("price > ?", 2000)
+  Book Load (0.4ms)  SELECT "books".* FROM "books"  WHERE (price > 2000)
+=> #<ActiveRecord::Relation [#<Book id: 3, name: "Book 3", published_on: "2014-11-24", price: 3000, number_of_page: nil, created_at: "2015-02-24 11:22:43", updated_at: "2015-02-24 11:22:43">, #<Book id: 4, name: "Book 4", published_on: "2014-10-24", price: 4000, number_of_page: nil, created_at: "2015-02-24 11:22:43", updated_at: "2015-02-24 11:22:43">, #<Book id: 5, name: "Book 5", published_on: "2014-09-24", price: 5000, number_of_page: nil, created_at: "2015-02-24 11:22:43", updated_at: "2015-02-24 11:22:43">]>
+irb(main):006:0>
+╭─Hiroaki@Hiroaki-no-MacBook-Pro.local ~/ruby/book_admin ‹2.2.0› ‹master*›
+╰─➤  clear
+╭─Hiroaki@Hiroaki-no-MacBook-Pro.local ~/ruby/book_admin ‹2.2.0› ‹master*›
+╰─➤  ./bin/rails g model Publisher name:string address:text
+      invoke  active_record
+      create    db/migrate/20150224112743_create_publishers.rb
+      create    app/models/publisher.rb
+      invoke    test_unit
+      create      test/models/publisher_test.rb
+      create      test/fixtures/publishers.yml
+╭─Hiroaki@Hiroaki-no-MacBook-Pro.local ~/ruby/book_admin ‹2.2.0› ‹master*›
+╰─➤  ./bin/rails g model Author name:string penname:string
+      invoke  active_record
+      create    db/migrate/20150224112812_create_authors.rb
+      create    app/models/author.rb
+      invoke    test_unit
+      create      test/models/author_test.rb
+      create      test/fixtures/authors.yml
+╭─Hiroaki@Hiroaki-no-MacBook-Pro.local ~/ruby/book_admin ‹2.2.0› ‹master*›
+╰─➤  ./bin/rake db:migrate
+== 20150224112743 CreatePublishers: migrating =================================
+-- create_table(:publishers)
+   -> 0.0043s
+== 20150224112743 CreatePublishers: migrated (0.0045s) ========================
+
+== 20150224112812 CreateAuthors: migrating ====================================
+-- create_table(:authors)
+   -> 0.0007s
+== 20150224112812 CreateAuthors: migrated (0.0008s) ===========================
+
+╭─Hiroaki@Hiroaki-no-MacBook-Pro.local ~/ruby/book_admin ‹2.2.0› ‹master*›
+╰─➤  ./bin/rails g migration AddPublisherIdBooks publisher:references
+      invoke  active_record
+      create    db/migrate/20150224113000_add_publisher_id_books.rb
+╭─Hiroaki@Hiroaki-no-MacBook-Pro.local ~/ruby/book_admin ‹2.2.0› ‹master*›
+╰─➤  ./bin/rake db:migrate
+== 20150224113000 AddPublisherIdBooks: migrating ==============================
+== 20150224113000 AddPublisherIdBooks: migrated (0.0000s) =====================
+
+╭─Hiroaki@Hiroaki-no-MacBook-Pro.local ~/ruby/book_admin ‹2.2.0› ‹master*›
+╰─➤

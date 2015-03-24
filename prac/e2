@@ -1,0 +1,17 @@
+# coding: utf-8
+def copy(from, to)
+  src = open(from) # ここで開けなかった場合でもensureは必ず実行される
+  begin
+    dst = open(to, "w")
+    data = src.read
+    dst.write(data)
+    dst.close
+  ensure
+    src.close
+  end
+end
+
+copy_src = ARGV[0]
+copy_dst = ARGV[1]
+copy(copy_src,copy_dst)
+
