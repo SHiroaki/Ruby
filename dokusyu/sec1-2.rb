@@ -119,3 +119,72 @@ when 11
 else
   puts "Dec."
 end
+
+# 繰り返し
+(1..5).each do |i|
+  puts i
+end
+
+3.times do |i|
+  puts i
+end
+
+array = [1,2,3,-1,1,2,3]
+sum = 0
+array.each do |num|
+  if num < 0
+    break
+  end
+  sum += num
+end
+
+puts sum
+
+sum = 0
+array.each do |num|
+  if num < 0
+   next
+  end
+  sum += num
+end
+puts sum
+
+array = [1,2,3,4,5]
+sum = 0
+array.each do |num|
+  sum += num
+  if sum % 3 == 0
+    redo
+  end
+end
+puts sum
+
+# prac2.6
+print "------------------prac2.6----------------------\n"
+
+for i in (1..100)
+  puts i
+end
+
+(1..100).each do |i|
+  puts i
+end
+
+100.times do |i|
+  puts i + 1
+end
+
+# 理解度チェック
+# prac2.5
+print "------------------理解度----------------------\n"
+(1..100).each do |i|
+  if i % 3 == 0
+    puts i
+  end
+end
+
+(1..100).each do |i|
+  if i % 3 == 0 && i % 5 != 0
+    puts i
+  end
+end
